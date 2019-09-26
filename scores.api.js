@@ -3,9 +3,11 @@ const scoresRoute = express.Router();
 const pool = require("../trivia_server/connection");
 
 function selectAllScores(req, res) {
-  pool.query("select * from scores").then(result => {
-    res.send(result.rows);
-  });
+  pool
+    .query("select * from scores order by score desc limit 5")
+    .then(result => {
+      res.send(result.rows);
+    });
 }
 
 scoresRoute.get("/scores", selectAllScores);
